@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Guessing Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/index.css">
+    <link rel="stylesheet" href="styles/css/flags.css">
+</head>
+<body>
+     <!-- Menu Components -->
+     <div class="menu-icon">
+        <button id="menu-toggle">☰</button>
+    </div>
+
+    <div id="popup-menu" class="popup-menu hidden">
+        <div class="menu-content">
+            <button id="close-menu">✕</button>
+            <h3>Menu</h3>
+            <div class="menu-options">
+                <div class="menu-option">
+                    <span>Dark Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="menu-option">
+                    <span>Sound</span>
+                    <label class="switch">
+                        <input type="checkbox" id="sound-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <a class="back-button hub-return" href="#">Back to Hub</a>
+            </div>
+        </div>
+    </div>
+    <!-- Game Setup Screen -->
+    <div id="game-setup" class="screen">
+        <h2>Flag Guessing Game Setup</h2>
+        
+        <!-- Game Mode Selection -->
+        <div class="setup-section">
+            <h3>Game Mode</h3>
+            <div class="mode-options">
+                <button class="mode-select active" data-mode="easy">Easy Mode (Multiple Choice)</button>
+                <button class="mode-select" data-mode="hard">Hard Mode (Fill in the Blank)</button>
+            </div>
+        </div>
+
+        <!-- Game Type Selection -->
+        <div class="setup-section">
+            <h3>Game Type</h3>
+            <div class="type-options">
+                <button class="type-select" data-type="infinite">Infinite Mode</button>
+                <button class="type-select" data-type="rounds">Custom Rounds</button>
+                <button class="type-select" data-type="timed">Timed Mode</button>
+            </div>
+        </div>
+
+        <!-- Custom Settings (initially hidden) -->
+        <div id="rounds-setup" class="setup-section hidden">
+            <h3>Number of Rounds</h3>
+            <input type="number" id="round-count" min="5" max="50" value="10">
+        </div>
+
+        <div id="timer-setup" class="setup-section hidden">
+            <h3>Time Limit (minutes)</h3>
+            <input type="number" id="time-limit" min="1" max="30" value="5">
+        </div>
+        <div class="button-container">
+            <button class="play-button">Start Game</button>
+            <a class="back-button hub-return" href="#">Back to Hub</a>
+        </div>        
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+        <div class="game-header">
+            <div id="score">Score: <span>0</span></div>
+            <div id="timer" class="hidden">Time: <span>5:00</span></div>
+            <div id="round-counter" class="hidden">Round: <span>1/10</span></div>
+        </div>
+
+        <div class="flag-container">
+            <img id="flag-image" src="" alt="Country Flag">
+        </div>
+
+        <!-- Multiple Choice Options -->
+        <div id="multiple-choice" class="answer-section hidden">
+            <div class="options-grid">
+                <!-- Options will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Fill in the Blank -->
+        <div id="fill-blank" class="answer-section hidden">
+            <input type="text" id="country-input" placeholder="Enter country name">
+            <button id="submit-answer">Submit</button>
+        </div>
+
+        <button id="next-flag" class="hidden">Next Flag</button>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="screen hidden">
+        <h2>Game Over!</h2>
+        <div class="final-score">
+            <h3>Final Score: <span>0</span></h3>
+            <p>Correct Answers: <span>0</span></p>
+            <p>Total Questions: <span>0</span></p>
+            <p>Accuracy: <span>0%</span></p>
+        </div>
+        <button id="play-again" class="play-button">Play Again</button>
+        <a class="back-button hub-return" href="#">Back to Hub</a>
+    </div>
+
+    <script src="styles/js/flags.js"></script>
+</body>
+</html>

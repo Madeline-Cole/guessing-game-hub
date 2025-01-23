@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/index.css">
+</head>
+<body>
+
+<!-- Start Screen -->
+<div id="start-screen" class="screen">
+    <h1>Welcome to the Guessing Game Hub</h1>
+    <p>Test your knowledge with our collection of guessing games</p>
+    <button id="enter-hub-button">Enter Hub</button>
+</div>
+
+<!-- Game Selection Screen -->
+<div id="game-selection" class="screen hidden">
+    <h2>Select Your Game</h2>
+    <div class="game-grid">
+        <div class="game-card" data-game="flags">
+            <h3>Flag Guessing</h3>
+            <p>Test your knowledge of world flags</p>
+        </div>
+        <div class="game-card" data-game="world-capitals">
+            <h3>World Capitals</h3>
+            <p>Match countries with their capitals</p>
+        </div>
+        <div class="game-card" data-game="state-capitals">
+            <h3>US State Capitals</h3>
+            <p>Name the capitals of US states</p>
+        </div>
+        <div class="game-card" data-game="coming-soon">
+            <h3>Coming Soon</h3>
+            <p>More exciting games on the way!</p>
+        </div>
+    </div>
+</div>
+
+ <!-- Game Intro Screens -->
+ <div id="flags-intro" class="screen hidden">
+    <h2>Flag Guessing Game</h2>
+    <p>Can you identify these flags from around the world?</p>
+    <button onclick="window.location.href='flags.html'" class="play-button">Play Now</button>
+    <button class="back-button">Back to Hub</button>
+</div>
+
+<div id="world-capitals-intro" class="screen hidden">
+    <h2>World Capitals Quiz</h2>
+    <p>Test your knowledge of world capitals!</p>
+    <button class="play-button">Play Now</button>
+    <button class="back-button">Back to Hub</button>
+</div>
+
+<div id="state-capitals-intro" class="screen hidden">
+    <h2>US State Capitals Challenge</h2>
+    <p>How well do you know your US state capitals?</p>
+    <button class="play-button">Play Now</button>
+    <button class="back-button">Back to Hub</button>
+</div>
+</body>
+
+<script src="styles/js/index.js"></script>
+</html>
