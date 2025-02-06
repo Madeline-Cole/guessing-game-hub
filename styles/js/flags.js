@@ -1,7 +1,7 @@
 class FlagGame {
     constructor() {
-        this.gameMode = 'easy';
-        this.gameType = 'infinite';
+        this.gameMode = null;
+        this.gameType = null;
         this.rounds = 10;
         this.timeLimit = 300;
         this.score = 0;
@@ -28,6 +28,8 @@ class FlagGame {
     }
 
     setupEventListeners() {
+        const playButton = document.querySelector('#game-setup .play-button');
+        playButton.classList.add('inactive');
         // Hub Navigation
         // Update hub navigation to show stats for infinite mode
     document.querySelectorAll('.hub-return').forEach(button => {
@@ -43,11 +45,17 @@ class FlagGame {
     
         // Game Mode and Type Selection
         document.querySelectorAll('.mode-select').forEach(button => {
-            button.addEventListener('click', () => this.setGameMode(button.dataset.mode));
+            button.addEventListener('click', () => {
+                this.setGameMode(button.dataset.mode);
+                this.updatePlayButtonState();
+            });
         });
     
         document.querySelectorAll('.type-select').forEach(button => {
-            button.addEventListener('click', () => this.setGameType(button.dataset.type));
+            button.addEventListener('click', () => {
+                this.setGameType(button.dataset.type);
+                this.updatePlayButtonState();
+            });
         });
     
         // Game Control Buttons
@@ -84,26 +92,133 @@ class FlagGame {
     
         this.isMuted = localStorage.getItem('isMuted') === 'true';
         document.getElementById('sound-toggle').checked = !this.isMuted;
-    }    
-
+    }  
+    
+    updatePreview() {
+        const previewContainer = document.querySelector('.preview-container');
+        const previewContent = previewContainer.querySelector('.preview-content');
+        
+        if (this.gameMode) {
+            // Add fade out class to existing content
+            previewContent.classList.add('fade-out');
+            
+            // Wait for fade out to complete
+            setTimeout(() => {
+                // Show container if not already visible
+                previewContainer.classList.add('active');
+                
+                // Get sample countries and build HTML
+                const sampleCountries = this.flags
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 4);
+                
+                let previewHTML = `
+                    <div class="preview-flag">
+                        <img src="${sampleCountries[0]?.flag || ''}" alt="Sample Flag">
+                    </div>
+                `;
+                
+                if (this.gameMode === 'easy') {
+                    previewHTML += `
+                        <div class="options-grid">
+                            ${sampleCountries.map(country => `
+                                <button class="option-btn">${country.name}</button>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    previewHTML += `
+                        <div class="fill-blank">
+                            <input type="text" placeholder="Enter country name" disabled>
+                            <button disabled>Submit</button>
+                        </div>
+                    `;
+                }
+                
+                // Update content and trigger fade in
+                previewContent.innerHTML = previewHTML;
+                previewContent.classList.remove('fade-out');
+                previewContent.classList.add('fade-in');
+                
+                // Remove animation class after it completes
+                setTimeout(() => {
+                    previewContent.classList.remove('fade-in');
+                }, 300);
+                
+            }, 300); // Match transition duration
+            
+        } else {
+            previewContainer.classList.remove('active');
+        }
+    }     
+    
+    
     setGameMode(mode) {
         this.gameMode = mode;
         document.querySelectorAll('.mode-select').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.mode === mode);
         });
+        this.updatePreview();
     }
-
+    
     setGameType(type) {
         this.gameType = type;
         document.querySelectorAll('.type-select').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.type === type);
         });
-
         document.getElementById('rounds-setup').classList.toggle('hidden', type !== 'rounds');
         document.getElementById('timer-setup').classList.toggle('hidden', type !== 'timed');
     }
 
+    updatePlayButtonState() {
+        const playButton = document.querySelector('#game-setup .play-button');
+        const modeSelected = document.querySelector('.mode-select.active');
+        const typeSelected = document.querySelector('.type-select.active');
+    
+        if (modeSelected && typeSelected) {
+            playButton.classList.remove('inactive');
+        } else {
+            playButton.classList.add('inactive');
+        }
+    }
+
     startGame() {
+        // Check if game mode and type are selected
+    const modeSelected = document.querySelector('.mode-select.active');
+    const typeSelected = document.querySelector('.type-select.active');
+    
+    if (!modeSelected && !typeSelected) {
+        showError('Please select both a Game Mode and Game Type');
+        return;
+    }
+    
+    if (!modeSelected) {
+        showError('Please select a Game Mode (Easy/Hard)');
+        return;
+    }
+    
+    if (!typeSelected) {
+        showError('Please select a Game Type (Infinite/Rounds/Timed)');
+        return;
+    }
+
+    // Additional validation for specific game types
+    if (this.gameType === 'rounds') {
+        const roundCount = parseInt(document.getElementById('round-count').value);
+        if (isNaN(roundCount) || roundCount < 5 || roundCount > 50) {
+            alert('Please enter a valid number of rounds (5-50)');
+            return;
+        }
+    }
+
+    if (this.gameType === 'timed') {
+        const timeLimit = parseInt(document.getElementById('time-limit').value);
+        if (isNaN(timeLimit) || timeLimit < 1 || timeLimit > 30) {
+            alert('Please enter a valid time limit (1-30 minutes)');
+            return;
+        }
+    }
+
         document.querySelector('.menu-icon').classList.add('active');
         const hubButton = document.querySelector('#popup-menu .hub-return');
         if (this.gameType === 'infinite') {
@@ -148,19 +263,55 @@ class FlagGame {
         const fillBlank = document.getElementById('fill-blank');
         const countryInput = document.getElementById('country-input');
     
-        if (this.gameMode === 'easy') {
-            multipleChoice.classList.remove('hidden');
-            fillBlank.classList.add('hidden');
-            countryInput.classList.add('hidden');
-        } else {
-            multipleChoice.classList.add('hidden');
-            fillBlank.classList.remove('hidden');
-            countryInput.classList.remove('hidden');
-            document.getElementById('submit-answer').classList.remove('hidden');
+        // Clear and show multiple choice container for easy mode
+    if (this.gameMode === 'easy') {
+        const multipleChoice = document.getElementById('multiple-choice');
+        const fillBlank = document.getElementById('fill-blank');
+        
+        // Remove hidden class from multiple choice
+        multipleChoice.classList.remove('hidden');
+        // Hide fill in the blank
+        fillBlank.classList.add('hidden');
+        
+        // Clear any existing options
+        const optionsGrid = multipleChoice.querySelector('.options-grid');
+        if (optionsGrid) {
+            optionsGrid.innerHTML = '';
         }
+    } else {
+        // Hard mode setup
+        document.getElementById('multiple-choice').classList.add('hidden');
+        document.getElementById('fill-blank').classList.remove('hidden');
+        document.getElementById('submit-answer').classList.remove('hidden');
+    }
     
         this.loadNextFlag();
-    }    
+    }  
+    
+    loadMultipleChoice() {
+        const options = [this.currentFlag];
+        while (options.length < 4) {
+            const randomFlag = this.flags[Math.floor(Math.random() * this.flags.length)];
+            if (!options.find(opt => opt.name === randomFlag.name)) {
+                options.push(randomFlag);
+            }
+        }
+    
+        const shuffledOptions = options.sort(() => Math.random() - 0.5);
+        const optionsContainer = document.querySelector('#multiple-choice .options-grid');
+        
+        // Clear existing options
+        optionsContainer.innerHTML = '';
+        
+        // Add new options
+        shuffledOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.textContent = option.name;
+            button.addEventListener('click', () => this.checkAnswer(option.name));
+            optionsContainer.appendChild(button);
+        });
+    }
     
     loadNextFlag() {
         document.getElementById('next-flag').classList.add('hidden');
@@ -190,28 +341,6 @@ class FlagGame {
             document.getElementById('round-counter').querySelector('span').textContent = 
                 `${this.currentRound}/∞`;
         }
-    }
-
-    loadMultipleChoice() {
-        const options = [this.currentFlag];
-        while (options.length < 4) {
-            const randomFlag = this.flags[Math.floor(Math.random() * this.flags.length)];
-            if (!options.find(opt => opt.name === randomFlag.name)) {
-                options.push(randomFlag);
-            }
-        }
-
-        const shuffledOptions = options.sort(() => Math.random() - 0.5);
-        const optionsContainer = document.querySelector('.options-grid');
-        optionsContainer.innerHTML = '';
-        
-        shuffledOptions.forEach(option => {
-            const button = document.createElement('button');
-            button.className = 'option-btn';
-            button.textContent = option.name;
-            button.addEventListener('click', () => this.checkAnswer(option.name));
-            optionsContainer.appendChild(button);
-        });
     }
 
     checkAnswer(answer) {
@@ -317,6 +446,18 @@ class FlagGame {
 
         document.querySelector('#popup-menu .hub-return').textContent = 'Back to Hub';
     }
+}
+
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    
+    // Remove the error message after animation completes
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 3000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

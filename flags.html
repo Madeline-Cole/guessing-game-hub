@@ -33,7 +33,7 @@
                         <span class="slider"></span>
                     </label>
                 </div>
-                <a class="back-button hub-return" href="#">Back to Hub</a>
+                <a class="menu-quit hub-return" href="#">Back to Hub</a>
             </div>
         </div>
     </div>
@@ -41,39 +41,51 @@
     <div id="game-setup" class="screen">
         <h2>Flag Guessing Game Setup</h2>
         
-        <!-- Game Mode Selection -->
-        <div class="setup-section">
-            <h3>Game Mode</h3>
-            <div class="mode-options">
-                <button class="mode-select active" data-mode="easy">Easy Mode (Multiple Choice)</button>
-                <button class="mode-select" data-mode="hard">Hard Mode (Fill in the Blank)</button>
+        <div class="game-container">
+            <div class="setup-container">
+                <!-- Game Mode Selection -->
+                <div class="setup-section">
+                    <h3>Game Mode</h3>
+                    <div class="mode-options">
+                        <button class="mode-select" data-mode="easy">Easy Mode (Multiple Choice)</button>
+                        <button class="mode-select" data-mode="hard">Hard Mode (Fill in the Blank)</button>
+                    </div>
+                </div>
+
+                <!-- Game Type Selection -->
+                <div class="setup-section">
+                    <h3>Game Type</h3>
+                    <div class="type-options">
+                        <button class="type-select" data-type="infinite">Infinite Mode</button>
+                        <button class="type-select" data-type="rounds">Custom Rounds</button>
+                        <button class="type-select" data-type="timed">Timed Mode</button>
+                    </div>
+                </div>
+
+                <!-- Custom Settings -->
+                <div id="rounds-setup" class="setup-section hidden">
+                    <h3>Number of Rounds</h3>
+                    <input type="number" id="round-count" min="5" max="50" value="10">
+                </div>
+
+                <div id="timer-setup" class="setup-section hidden">
+                    <h3>Time Limit (minutes)</h3>
+                    <input type="number" id="time-limit" min="1" max="30" value="5">
+                </div>
+
+                <div class="button-container">
+                    <button class="play-button">Start Game</button>
+                    <a class="back-button hub-return" href="#">Back to Hub</a>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <h3 class="preview-title">Game Preview</h3>
+                <div class="preview-content">
+                    <!-- Preview content will be dynamically inserted here -->
+                </div>
             </div>
         </div>
-
-        <!-- Game Type Selection -->
-        <div class="setup-section">
-            <h3>Game Type</h3>
-            <div class="type-options">
-                <button class="type-select" data-type="infinite">Infinite Mode</button>
-                <button class="type-select" data-type="rounds">Custom Rounds</button>
-                <button class="type-select" data-type="timed">Timed Mode</button>
-            </div>
-        </div>
-
-        <!-- Custom Settings (initially hidden) -->
-        <div id="rounds-setup" class="setup-section hidden">
-            <h3>Number of Rounds</h3>
-            <input type="number" id="round-count" min="5" max="50" value="10">
-        </div>
-
-        <div id="timer-setup" class="setup-section hidden">
-            <h3>Time Limit (minutes)</h3>
-            <input type="number" id="time-limit" min="1" max="30" value="5">
-        </div>
-        <div class="button-container">
-            <button class="play-button">Start Game</button>
-            <a class="back-button hub-return" href="#">Back to Hub</a>
-        </div>        
     </div>
 
     <!-- Game Screen -->

@@ -1,8 +1,28 @@
 .setup-section {
-    margin: 20px 0;
+    margin: 10px 0;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+}
+
+/* Answer Section Visibility */
+.answer-section {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.answer-section.hidden {
+    display: none;
 }
 
 .hidden {
@@ -11,28 +31,115 @@
 
 .mode-options, .type-options {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin: 15px 0;
 }
 
-.mode-select, .type-select {
-    padding: 12px 20px;
-    border: 2px solid var(--primary-color);
+.mode-select, .type-select, .option-btn {
+    width: 100%;
+    padding: 12px;
     border-radius: 15px;
     background: white;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 0.95rem;
+    text-align: center;
 }
 
-.mode-select.active, .type-select.active {
+/* Game Mode Section */
+.mode-options h3 {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.mode-select {
+    border: 2px solid var(--primary-color);
+    background: rgba(255, 136, 179, 0.1);
+    color: var(--primary-color);
+}
+
+.mode-select:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.mode-select.active {
     background: var(--primary-color);
     color: white;
 }
 
+/* Game Type Section */
+.type-options h3 {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.type-select {
+    border: 2px solid var(--secondary-color);
+    background: rgba(148, 209, 255, 0.1);
+    color: var(--secondary-color);
+}
+
+.type-select:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.type-select.active {
+    background: var(--secondary-color);
+    color: white;
+}
+
+
+h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+}
+
+
+/* Different colors for game mode and type */
+.mode-select {
+    border: 2px solid var(--primary-color);
+    background: rgba(255, 136, 179, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.type-select {
+    border: 2px solid var(--secondary-color);
+    background: rgba(148, 209, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mode-select:hover, .type-select:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled state */
+.play-button.inactive,
+#next-flag[disabled] {
+    background-color: #cccccc;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+    animation: none;
+}
+
+.play-button.inactive:hover {
+    transform: none;
+    animation: none;
+}
+
 .flag-container {
-    width: 300px;
-    height: 200px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 3/2;
     margin: 20px auto;
     border-radius: 10px;
     overflow: hidden;
@@ -45,21 +152,39 @@
     object-fit: cover;
 }
 
+/* Multiple Choice Section Styling */
+#multiple-choice {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#multiple-choice.hidden {
+    display: none;
+}
+
 .options-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin: 20px 0;
+    margin: 20px auto;
+    width: 100%;
 }
 
 .option-btn {
-    padding: 15px;
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 20px;
     border: 2px solid var(--primary-color);
     border-radius: 10px;
     background: white;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .option-btn:hover {
     background: var(--primary-color);
@@ -86,10 +211,20 @@
 }
 
 #country-input {
-    padding: 12px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 12px 15px;
     border: 2px solid var(--primary-color);
     border-radius: 10px;
-    font-size: 1.1em;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#country-input:focus {
+    outline: none;
+    border-color: #FF88B3;
+    box-shadow: 0 0 8px rgba(255, 136, 179, 0.3);
 }
 
 .game-header {
@@ -128,18 +263,10 @@
 }
 
 .play-button, .back-button {
-    display: inline-block;
-    padding: 15px 35px;
-    font-size: 1.2em;
-    cursor: pointer;
-    border: none;
-    border-radius: 25px;
+    width: 100%;
+    max-width: 250px;
+    padding: 15px;
     margin: 10px;
-    color: white;
-    font-weight: 500;
-    text-align: center;
-    min-width: 180px;
-    vertical-align: middle;
 }
 
 .button-container {
@@ -157,17 +284,172 @@
 }
 
 /*ROUND SELECTION*/
+.game-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.setup-container {
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.setup-section:hover, .preview-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.preview-container {
+    flex: 1;
+    position: sticky;
+    top: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(30px);
+    display: none; /* Hide by default */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.preview-container.active {
+    opacity: 1;
+    transform: translateX(0);
+    display: block; /* Show when active */
+}
+
+.preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.preview-content.fade-out {
+    opacity: 0;
+}
+
+.preview-content.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+.preview-flag {
+    width: 100%;
+    aspect-ratio: 3/2;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.preview-flag img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-container .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.preview-container .option-btn {
+    padding: 12px;
+    font-size: 0.9em;
+}
+
+/* Fill in the blank preview styling */
+.preview-container .fill-blank {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.preview-container .fill-blank input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f5f5f5; /* Light gray background for disabled state */
+}
+
+.preview-container .fill-blank button {
+    width: 100%;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(255, 136, 179, 0.3);
+    opacity: 0.7; /* Slightly dimmed for disabled state */
+    cursor: not-allowed;
+}
+
+/* Disabled state styling */
+.preview-container .fill-blank input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.preview-container .fill-blank button:disabled {
+    background-color: var(--primary-color);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.preview-title {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
 #rounds-setup, #timer-setup {
     text-align: center;
     padding: 20px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(107, 91, 149, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+#rounds-setup:hover, #timer-setup:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 #round-count, #time-limit {
     width: 120px;
-    padding: 12px 40px 12px 15px;
+    padding: 8px 35px 8px 12px;
+    font-size: 1rem;
     border: 2px solid var(--primary-color);
     border-radius: 12px;
     font-size: 1.2em;
@@ -395,15 +677,40 @@ input:checked + .slider:before {
 }
 
 .menu-button {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
     padding: 12px 20px;
     background: var(--primary-color);
     color: white;
     text-decoration: none;
     border-radius: 25px;
-    text-align: center;
     margin-top: 20px;
     transition: all 0.3s ease;
+}
+
+
+
+.menu-quit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+    margin: 10px auto;
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+.menu-quit:hover {
+    background-color: #FF88B3;
+    transform: translateY(-2px);
 }
 
 .menu-button:hover {
@@ -424,4 +731,173 @@ input:checked + .slider:before {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
     100% { opacity: 1; }
+}
+
+/* Error Message Styling */
+.error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff4444;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    z-index: 2000;
+    animation: slideDown 0.3s ease-out, fadeOut 0.3s ease-out 2.7s forwards;
+    font-weight: 500;
+}
+
+@keyframes slideDown {
+    from { 
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from { 
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    to { 
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .game-container {
+        flex-direction: column;
+    }
+
+    .preview-container {
+        position: static;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .setup-section {
+        padding: 15px;
+    }
+
+    .game-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .mode-options, .type-options {
+        grid-template-columns: 1fr;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .play-button, .back-button {
+        width: 100%;
+        max-width: 300px;
+        margin: 5px 0;
+    }
+
+    .flag-container {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    #country-input {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .menu-content {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .mode-select, .type-select, .option-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .play-button, .back-button {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+/* Improved visibility */
+.setup-section {
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    border-color: #FF6B9C;
+    border-width: 1px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Enhanced button visibility */
+.mode-select, .type-select {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Improved input fields */
+#round-count, #time-limit {
+    width: 100%;
+    max-width: 150px;
+}
+
+/* Common Button Styles */
+.mode-select, 
+.type-select, 
+.play-button, 
+.back-button, 
+.menu-button, 
+.menu-quit,
+#next-flag, 
+#submit-answer {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 150px;
+    transition: all 0.4s ease;
+}
+
+/* Hover Effect for all buttons */ 
+.play-button:hover, 
+.back-button:hover, 
+.menu-button:hover, 
+.menu-quit:hover,
+#next-flag:hover, 
+#submit-answer:hover {
+    transform: translateY(-2.5px) scale(1.05);
+    animation: smoothPulse 1.5s ease-in-out infinite;
 }

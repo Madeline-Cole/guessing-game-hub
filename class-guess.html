@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Class Guessing Game</title>
+    <style>
+        button::after {
+            content: attr(data-count);
+        }
+
+        #class-1 {
+            background-color: aqua;
+            padding: auto;
+            padding-bottom: 10px;
+        }
+
+        #class-1-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        button {
+            align-items: center;
+            background-color: rgb(255, 0, 208);
+            padding: 10px;
+            margin: 10px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <a class="back-to-hub" href="index.html?screen=selection">Back to Hub</a>
+    <h1>Playing Around With JS</h1>
+        <div id="class-1">
+            <h2>Class 1</h2>
+            <h3>Counting Up and Down Dynamically</h3>
+            <div id="class-1-buttons">
+                <button data-count="0" onclick="this.dataset.count++">Count Up </button>
+                <button data-count="0" onclick="this.dataset.count--">Count Down </button>
+                <button id="btn">Tap to Start Count Up</button>
+            </div>
+        </div>
+
+        <div id="class-2">
+            <h2>Class 2</h2>
+        </div>
+
+    <script>
+        let counter = 0;
+
+        function increment() {
+            counter++;
+            display();
+        }
+
+        function display() {
+            btn.textContent = "Count Up " + counter;
+        }
+
+        btn.onclick = increment;
+    </script>
+
+</body>
+</html>

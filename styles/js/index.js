@@ -13,18 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('start-screen').classList.add('hidden');  // Changed from welcome-screen to start-screen
         document.getElementById('game-selection').classList.remove('hidden');
     });
-
-    // Game selection handlers
-    const gameCards = document.querySelectorAll('.game-card');
-    gameCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const game = this.dataset.game;
-            if (game !== 'coming-soon') {
-                document.getElementById('game-selection').classList.add('hidden');
-                document.getElementById(`${game}-intro`).classList.remove('hidden');
-            }
-        });
-    });
+    
+   // Game selection handlers
+   const gameCards = document.querySelectorAll('.game-card');
+   gameCards.forEach(card => {
+       card.addEventListener('click', function() {
+           const game = this.dataset.game;
+           if (game === 'class-guess') {
+               window.location.href = 'class-guess.html';
+           } else if (game !== 'coming-soon') {
+               document.getElementById('game-selection').classList.add('hidden');
+               document.getElementById(`${game}-intro`).classList.remove('hidden');
+           }
+       });
+   });
 
     // Back button handlers
     const backButtons = document.querySelectorAll('.back-button');
