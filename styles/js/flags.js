@@ -9,6 +9,10 @@ class FlagGame {
         this.flags = [];
         this.timer = null;
         this.currentFlag = null;
+
+        // Show menu toggle during setup
+    document.querySelector('.menu-icon').classList.add('active');
+    document.getElementById('menu-toggle').classList.remove('hidden');
         
         this.initializeGame();
     }

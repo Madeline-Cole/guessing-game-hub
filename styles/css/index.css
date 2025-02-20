@@ -819,3 +819,43 @@ p {
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    /* Remove animations and transitions */
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Modify fade effects */
+    .fade-in, 
+    .fade-out {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Modify preview transitions */
+    .preview-container,
+    .preview-content {
+        transition: none !important;
+    }
+
+    /* Remove hover animations */
+    .button:hover,
+    .option-btn:hover {
+        transform: none !important;
+    }
+
+    /* Remove game feedback animations */
+    .correct,
+    .incorrect {
+        animation: none !important;
+    }
+
+    /* Remove menu transitions */
+    .popup-menu,
+    .menu-icon {
+        transition: none !important;
+    }
+}
