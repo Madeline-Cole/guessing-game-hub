@@ -13,7 +13,7 @@ class FlagGame {
         this.initializeGame();
     }
 
-    async initializeGame() {
+    async initializeGame() { //FETCH FROM API
         try {
             const response = await fetch('https://restcountries.com/v3.1/all');
             const data = await response.json();
@@ -34,6 +34,7 @@ class FlagGame {
         // Update hub navigation to show stats for infinite mode
     document.querySelectorAll('.hub-return').forEach(button => {
         button.addEventListener('click', (e) => {
+            this.playSoundEffect('click');
             e.preventDefault();
             if (this.gameType === 'infinite' && this.currentRound > 0) {
                 this.endGame();
@@ -46,6 +47,7 @@ class FlagGame {
         // Game Mode and Type Selection
         document.querySelectorAll('.mode-select').forEach(button => {
             button.addEventListener('click', () => {
+                this.playSoundEffect('click');
                 this.setGameMode(button.dataset.mode);
                 this.updatePlayButtonState();
             });
@@ -53,6 +55,7 @@ class FlagGame {
     
         document.querySelectorAll('.type-select').forEach(button => {
             button.addEventListener('click', () => {
+                this.playSoundEffect('click');
                 this.setGameType(button.dataset.type);
                 this.updatePlayButtonState();
             });
@@ -61,29 +64,51 @@ class FlagGame {
         // Game Control Buttons
         document.querySelector('#game-setup .play-button').addEventListener('click', () => this.startGame());
         document.getElementById('submit-answer').addEventListener('click', () => {
+            this.playSoundEffect('click');
             const answer = document.getElementById('country-input').value;
             this.checkAnswer(answer);
         });
-        document.getElementById('next-flag').addEventListener('click', () => this.loadNextFlag());
-        document.getElementById('play-again').addEventListener('click', () => this.resetGame());
+        
+        document.getElementById('next-flag').addEventListener('click', () => {
+            this.playSoundEffect('click');
+            this.loadNextFlag();
+        });
+        
+        document.getElementById('play-again').addEventListener('click', () => {
+            this.playSoundEffect('click');
+            this.resetGame();
+        });
     
         // Menu Controls
         document.getElementById('menu-toggle').addEventListener('click', () => {
             document.getElementById('popup-menu').classList.remove('hidden');
+            this.playSoundEffect('click');
         });
         document.getElementById('close-menu').addEventListener('click', () => {
             document.getElementById('popup-menu').classList.add('hidden');
+            this.playSoundEffect('click');
         });
     
         // Settings Controls
         document.getElementById('dark-mode-toggle').addEventListener('change', (e) => {
+            this.playSoundEffect('click');
             document.body.classList.toggle('dark-mode', e.target.checked);
             localStorage.setItem('darkMode', e.target.checked);
         });
+        
         document.getElementById('sound-toggle').addEventListener('change', (e) => {
+            if (e.target.checked) {  // Sound is being turned ON
+                // Play sound before updating muted state
+                const tempMuted = this.isMuted;
+                this.isMuted = false;
+                this.playSoundEffect('click');
+                this.isMuted = tempMuted;
+            }
+            
+            // Update mute state
             this.isMuted = !e.target.checked;
             localStorage.setItem('isMuted', this.isMuted);
-        });
+        });  
     
         // Initialize Settings from localStorage
         const darkMode = localStorage.getItem('darkMode') === 'true';
@@ -92,7 +117,22 @@ class FlagGame {
     
         this.isMuted = localStorage.getItem('isMuted') === 'true';
         document.getElementById('sound-toggle').checked = !this.isMuted;
-    }  
+    } 
+    
+    playSoundEffect(type) {
+        if (this.isMuted) return;
+        
+        const sounds = {
+            correct: new Audio('assets/sounds/correct.mp3'),
+            incorrect: new Audio('assets/sounds/incorrect.mp3'),
+            click: new Audio('assets/sounds/click.mp3'),
+            gameOver: new Audio('assets/sounds/game-over.mp3')
+        };
+    
+        if (sounds[type]) {
+            sounds[type].play();
+        }
+    }
     
     updatePreview() {
         const previewContainer = document.querySelector('.preview-container');
@@ -205,8 +245,8 @@ class FlagGame {
     // Additional validation for specific game types
     if (this.gameType === 'rounds') {
         const roundCount = parseInt(document.getElementById('round-count').value);
-        if (isNaN(roundCount) || roundCount < 5 || roundCount > 50) {
-            alert('Please enter a valid number of rounds (5-50)');
+        if (isNaN(roundCount) || roundCount < 1 || roundCount > 100) {
+            showError('Please enter a valid number of rounds (1-100)');
             return;
         }
     }
@@ -214,12 +254,13 @@ class FlagGame {
     if (this.gameType === 'timed') {
         const timeLimit = parseInt(document.getElementById('time-limit').value);
         if (isNaN(timeLimit) || timeLimit < 1 || timeLimit > 30) {
-            alert('Please enter a valid time limit (1-30 minutes)');
+            showError('Please enter a valid time limit (1-30 minutes)');
             return;
         }
     }
 
         document.querySelector('.menu-icon').classList.add('active');
+
         const hubButton = document.querySelector('#popup-menu .hub-return');
         if (this.gameType === 'infinite') {
             hubButton.textContent = 'Quit Game';
@@ -346,6 +387,9 @@ class FlagGame {
     checkAnswer(answer) {
         const isCorrect = answer.toLowerCase() === this.currentFlag.name.toLowerCase();
 
+        // Play appropriate sound
+    this.playSoundEffect(isCorrect ? 'correct' : 'incorrect');
+
         if (this.gameMode === 'easy') {
             const buttons = document.querySelectorAll('.option-btn');
             buttons.forEach(button => {
@@ -414,6 +458,7 @@ class FlagGame {
     }
 
     endGame() {
+        this.playSoundEffect('gameOver');
         document.querySelector('.menu-icon').classList.remove('active');
     
         if (this.timer) {

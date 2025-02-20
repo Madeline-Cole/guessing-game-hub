@@ -10,6 +10,373 @@ html {
     touch-action: manipulation;
 }
 
+/* Menu Icon */
+.menu-icon {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.menu-icon.active {
+    display: block;
+}
+
+#menu-toggle {
+    font-size: 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#menu-toggle:hover {
+    transform: scale(1.1);
+    background-color: #FF88B3;
+}
+
+/* Popup Menu */
+.popup-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.popup-menu.hidden {
+    display: none !important;
+}
+
+.menu-content {
+    background: white;
+    width: 300px;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+#close-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.menu-options {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.menu-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.menu-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 12px 20px;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.menu-quit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+    margin: 10px auto;
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+.menu-quit:hover {
+    background-color: #FF88B3;
+    transform: translateY(-2px);
+}
+
+.menu-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.menu-button,
+.menu-quit {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 150px;
+    transition: all 0.4s ease;
+}
+
+.menu-button:hover, 
+.menu-quit:hover {
+    transform: translateY(-2.5px) scale(1.05);
+    animation: smoothPulse 1.5s ease-in-out infinite;
+}
+
+body.dark-mode .popup-menu,
+body.dark-mode .menu-content {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .menu-icon button {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+body.dark-mode .popup-menu {
+    background: rgba(26, 26, 26, 0.7); /* Semi-transparent dark background */
+}
+
+body.dark-mode .menu-content {
+    background: #2d2d2d;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Mode Styles for Game Hub and Selection */
+body.dark-mode {
+    background-color: #1a1a1a;
+    background-image: radial-gradient(circle at 50% 50%, #333333 10%, transparent 20%),
+                     radial-gradient(circle at 80% 80%, #333333 10%, transparent 20%);
+}
+
+body.dark-mode .screen {
+    background: rgba(45, 45, 45, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .game-card {
+    background-color: #333333;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .game-card:hover {
+    background: #444444;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p {
+    color: #ffffff;
+}
+
+body.dark-mode .setup-section {
+    background: rgba(45, 45, 45, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .mode-select,
+body.dark-mode .type-select {
+    background: #333333;
+    border-color: #555555;
+    color: #ffffff;
+}
+
+body.dark-mode .mode-select:hover,
+body.dark-mode .type-select:hover {
+    background: #444444;
+}
+
+body.dark-mode .mode-select.active,
+body.dark-mode .type-select.active {
+    background: var(--primary-color);
+}
+
+body.dark-mode #round-count,
+body.dark-mode #time-limit {
+    background: #333333;
+    color: #ffffff;
+    border-color: #555555;
+}
+
+body.dark-mode .preview-container {
+    background: rgba(45, 45, 45, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .option-btn {
+    background: #333333;
+    border-color: #555555;
+    color: #ffffff;
+}
+
+body.dark-mode .option-btn:hover {
+    background: #444444;
+}
+
+/* Dark mode for game cards hover state */
+body.dark-mode .game-card:hover h3 {
+    color: var(--primary-color);
+}
+
+body.dark-mode .game-card:hover p {
+    color: #ffffff;
+}
+
+/* Update the dark mode button styles */
+body.dark-mode #enter-hub-button {
+    background-color: var(--primary-color-dark);
+    color: white;
+}
+
+body.dark-mode #enter-hub-button:hover {
+    background-color: #B784BA;
+}
+
+body.dark-mode .menu-button {
+    background-color: var(--primary-color-dark);
+    color: white;
+}
+
+body.dark-mode .menu-button:hover {
+    background-color: #B784BA;
+}
+
+/* Update popup menu background in dark mode */
+body.dark-mode .menu-content {
+    background-color: #2d2d2d;
+    color: white;
+}
+
+
+/* Dark mode overrides for buttons */
+body.dark-mode .menu-button,
+body.dark-mode .play-button,
+body.dark-mode #next-flag,
+body.dark-mode #submit-answer,
+body.dark-mode input:checked + .slider {
+    background-color: var(--primary-color-dark);
+}
+
+body.dark-mode .menu-button:hover,
+body.dark-mode .play-button:hover,
+body.dark-mode #next-flag:hover,
+body.dark-mode #submit-answer:hover {
+    background-color: #B784BA; /* Lighter purple for hover state */
+}
+
+/* Update hover effects for dark mode */
+body.dark-mode #menu-toggle:hover {
+    background-color: var(--primary-color-dark);
+}
+
+body.dark-mode .game-card:hover {
+    background: #4A3B4A; /* Darker purple for game card hover */
+}
+
+/* Update active states for dark mode */
+body.dark-mode .mode-select.active,
+body.dark-mode .type-select.active {
+    background-color: var(--primary-color-dark);
+}
+
+/* Update h3 color in dark mode */
+body.dark-mode h3 {
+    color: var(--primary-color-dark);
+}
+
+/* Update menu toggle styles in dark mode */
+body.dark-mode #menu-toggle {
+    background-color: var(--primary-color-dark);
+}
+
+body.dark-mode #menu-toggle:hover {
+    background-color: #B784BA;
+}
+
+
+
 /* Remove button text decoration */
 button, 
 .play-button, 
@@ -343,10 +710,10 @@ p {
 }
 
 .game-card:hover {
-    transform: translateY(-8px) scale(1.05); /* Larger scale on hover */
-    background: #FFD6E5; /* Darker pink background */
+    transform: translateY(-8px) scale(1.05);
+    background: #E8E4F3; /* Light purple background */
     box-shadow: 
-        0 15px 35px rgba(255, 136, 179, 0.3),
+        0 15px 35px rgba(107, 91, 149, 0.3),
         0 8px 12px rgba(107, 91, 149, 0.2);
     animation-play-state: paused;
 }
@@ -376,11 +743,11 @@ p {
 
 .game-card:hover h3 {
     transform: scale(1.1);
-    color: #FF4D94; /* Darker pink for heading */
+    color: var(--text-color); /* Changed to soft purple */
 }
 
 .game-card:hover p {
-    color:  #fc2d80; /* Complementary color for text */
+    color: var(--text-color); /* Changed to soft purple */
 }
 
 @keyframes float {
@@ -425,6 +792,7 @@ p {
 
 :root {
     --primary-color: #FF88B3;    /* Soft pink */
+    --primary-color-dark: #9B6B9E; /* Purple for dark mode */
     --secondary-color: #94D1FF;  /* Light blue */
     --gradient-start: #FF88B3;   /* Soft pink */
     --gradient-end: #94D1FF;     /* Light blue */

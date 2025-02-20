@@ -6,6 +6,7 @@
     <title>Guessing Game Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/css/index.css">
+    <script src="styles/js/menu.js" defer></script>
 </head>
 <body>
 
@@ -67,6 +68,34 @@
     <p>How well do you know your US state capitals?</p>
     <button class="play-button">COMING SOON</button>
     <button class="back-button">Back to Hub</button>
+</div>
+
+<!-- Menu Icon -->
+<div class="menu-icon active">
+    <button id="menu-toggle">☰</button>
+</div>
+
+<!-- Popup Menu -->
+<div class="popup-menu hidden">
+    <div class="menu-content">
+        <button id="close-menu">×</button>
+        <div class="menu-options">
+            <div class="menu-option">
+                <span>Dark Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="menu-option">
+                <span>Sound</span>
+                <label class="switch">
+                    <input type="checkbox" id="sound-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 

@@ -3,7 +3,7 @@
     padding: 15px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(116, 26, 116, 0.147);
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
@@ -72,26 +72,39 @@ h2 {
 
 /* Game Type Section */
 .type-options h3 {
-    color: var(--secondary-color);
+    color: #8B44B8; /* Purple color for the heading */
     font-weight: bold;
 }
 
 .type-select {
-    border: 2px solid var(--secondary-color);
-    background: rgba(148, 209, 255, 0.1);
-    color: var(--secondary-color);
+    border: 2px solid #b989d8;
+    background: rgba(139, 68, 184, 0.1);
+    color: #b989d8;
 }
 
 .type-select:hover {
-    background: var(--secondary-color);
+    background: #b989d8;
     color: white;
     transform: translateY(-2px);
 }
 
 .type-select.active {
-    background: var(--secondary-color);
+    background: #b989d8;
     color: white;
 }
+
+/* Game Mode heading - Pink */
+.setup-section:first-child h3 {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Game Type heading - Purple */
+.setup-section:nth-child(2) h3 {
+    color: #8B44B8;
+    font-weight: bold;
+}
+
 
 
 h3 {
@@ -432,14 +445,50 @@ h3 {
     color: var(--primary-color);
 }
 
+/* Smooth animation for setup sections */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 #rounds-setup, #timer-setup {
     text-align: center;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(195, 216, 255, 0.95);
+    color: var(--text-color);
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
     transition: all 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.3s ease-out forwards;
+}
+
+body.dark-mode #rounds-setup,
+body.dark-mode #timer-setup {
+    background: var(--dark-surface);
+    color: var(--dark-text);
+}
+
+/* Input styling for dark mode */
+body.dark-mode #round-count,
+body.dark-mode #time-limit {
+    background: var(--dark-unselected);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode #round-count:focus,
+body.dark-mode #time-limit:focus {
+    border-color: var(--dark-primary);
+    box-shadow: 0 0 8px rgba(156, 39, 176, 0.3);
 }
 
 #rounds-setup:hover, #timer-setup:hover {
@@ -734,20 +783,45 @@ input:checked + .slider:before {
 }
 
 /* Error Message Styling */
+/* Error Message Styling */
 .error-message {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #ff4444;
+    background-color: var(--primary-color);
     color: white;
     padding: 15px 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 136, 179, 0.3);
     z-index: 2000;
     animation: slideDown 0.3s ease-out, fadeOut 0.3s ease-out 2.7s forwards;
     font-weight: 500;
 }
+
+/* Dark mode error message */
+body.dark-mode .error-message {
+    background-color: var(--dark-primary);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+}
+
+/* Round count input styling */
+#round-count {
+    min: 1;
+    max: 100;
+}
+
+/* Invalid input styling */
+#round-count:invalid {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+}
+
+body.dark-mode #round-count:invalid {
+    border-color: var(--dark-primary);
+    box-shadow: 0 0 5px rgba(156, 39, 176, 0.5);
+}
+
 
 @keyframes slideDown {
     from { 
@@ -840,6 +914,32 @@ input:checked + .slider:before {
         font-size: 0.9rem;
     }
 
+    /* Enhance transitions for mode and type selections */
+.mode-select, .type-select {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInStagger 0.3s ease-out forwards;
+}
+
+/* Staggered animation for options */
+@keyframes fadeInStagger {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply staggered delays to options */
+.mode-select:nth-child(1), .type-select:nth-child(1) { animation-delay: 0.1s; }
+.mode-select:nth-child(2), .type-select:nth-child(2) { animation-delay: 0.2s; }
+.mode-select:nth-child(3), .type-select:nth-child(3) { animation-delay: 0.3s; }
+
+
+
     .play-button, .back-button {
         font-size: 1rem;
         padding: 12px;
@@ -900,4 +1000,97 @@ input:checked + .slider:before {
 #submit-answer:hover {
     transform: translateY(-2.5px) scale(1.05);
     animation: smoothPulse 1.5s ease-in-out infinite;
+}
+
+/* Dark Mode Styles */
+/* Dark Mode Color Variables */
+:root {
+    --dark-bg: #1a1a1a;
+    --dark-surface: #2d2d2d;
+    --dark-primary: #412546;
+    --dark-secondary: #353c63;
+    --dark-hover: #aa82bc;
+    --dark-text: #ffffff;
+    --dark-border: #444444;
+    --dark-unselected: #404040;
+  }
+  
+  /* Updated Dark Mode Styles */
+  body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
+  
+  body.dark-mode .setup-section {
+    background: var(--dark-surface);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.2);
+    border-color: var(--dark-border);
+  }
+  
+  body.dark-mode .mode-select {
+    background-color: var(--dark-primary);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+  }
+  
+  body.dark-mode .type-select {
+    background-color: var(--dark-secondary);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+  }
+  
+  body.dark-mode .mode-select:hover,
+  body.dark-mode .type-select:hover {
+    background-color: var(--dark-hover);
+    transform: translateY(-2px);
+  }
+  
+  body.dark-mode #next-flag,
+  body.dark-mode #submit-answer {
+    background-color: var(--dark-primary);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+  }
+  
+  body.dark-mode #next-flag:hover,
+  body.dark-mode #submit-answer:hover {
+    background-color: var(--dark-hover);
+  }
+  
+  body.dark-mode .preview-container {
+    background: var(--dark-surface);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.2);
+  }
+  
+  body.dark-mode .game-header {
+    background: var(--dark-surface);
+  }
+  
+  /* Dark mode correct/incorrect states */
+body.dark-mode .option-btn {
+    background-color: var(--dark-unselected);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .option-btn:hover {
+    background-color: var(--dark-hover);
+}
+
+body.dark-mode .option-btn.correct {
+    background-color: #2e7d32;
+    color: white;
+    border-color: #2e7d32;
+}
+
+body.dark-mode .option-btn.incorrect {
+    background-color: #c62828;
+    color: white;
+    border-color: #c62828;
+}
+
+body.dark-mode .setup-section,
+body.dark-mode .preview-container,
+body.dark-mode .game-header,
+body.dark-mode .final-score {
+  background: var(--dark-surface);
 }

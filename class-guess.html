@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In Class Guessing Game</title>
     <style>
-        button::after {
+
+button::after {
             content: attr(data-count);
         }
 
@@ -13,32 +14,43 @@
             background-color: aqua;
             padding: auto;
             padding-bottom: 10px;
+            font-family: none;
+            font-color: black;
         }
 
-        #class-1-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        #class-2 {
+            background-color: rgb(60, 0, 255);
+            padding: auto;
+            padding-bottom: 10px;
+            font-family: none;
+            font-color: black;
         }
 
-        h1 {
-            text-align: center;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        h3 {
-            text-align: center;
+        body {
+            font-family: sans-serif;
+            color: indigo;
         }
 
         button {
-            align-items: center;
-            background-color: rgb(255, 0, 208);
-            padding: 10px;
-            margin: 10px;
+            
+        }
+
+        #class-3-btn {
+            background: ghostwhite;
+            padding: 8px 16px;
+            border: none;
+            color: inherit;
+            transition: 1s;
+        }
+
+        #class-3-btn button:hover {
+            background: lavender;
+            cursor: pointer;
+            padding: 8px 24px;
+        }
+
+        #class-3-btn button::after {
+            content: attr(data-count);
         }
 
     </style>
@@ -49,7 +61,7 @@
     <h1>Playing Around With JS</h1>
         <div id="class-1">
             <h2>Class 1</h2>
-            <h3>Counting Up and Down Dynamically</h3>
+            <h2>Counting Up and Down Dynamically</h2>
             <div id="class-1-buttons">
                 <button data-count="0" onclick="this.dataset.count++">Count Up </button>
                 <button data-count="0" onclick="this.dataset.count--">Count Down </button>
@@ -59,9 +71,41 @@
 
         <div id="class-2">
             <h2>Class 2</h2>
+            <h1>Quiz</h1>
+            <h2>How should you not refer to JavaScript?</h2>
+    <button onclick ="check(this)" class="correct">JS</button>
+    <button onclick ="check(this)">Vanila JS</button>
+    <button onclick ="check(this)">Java</button>
+    <button onclick ="check(this)">ECMAScript</button>
+    <h2>What does the C in CSS stand for?</h2>
+        <button onclick ="check(this)" class="correct">Cascading</button>
+        <button onclick ="check(this)">Compounding</button>
+        <button onclick ="check(this)">Crafting</button>
+        <button onclick ="check(this)">Compiling</button>
         </div>
 
+    <div id="class-3">
+    <h2>Class 3</h2>
+    <h2>Web Quiz</h2>
+    <div class ="question">
+        <h3>How should you not refer to JavaScript?</h2>
+            <button id="class-3-btn"onclick ="check(this)" class="correct">JS</button>
+            <button id="class-3-btn"onclick ="check(this)">Vanila JS</button>
+            <button id="class-3-btn"onclick ="check(this)">Java</button>
+            <button id="class-3-btn"onclick ="check(this)">ECMAScript</button>
+    </div>
+    
+    <div class ="question">
+    <h3>What does the C in CSS stand for?</h2>
+    <button id="class-3-btn"onclick ="check(this)" class="correct">Cascading</button>
+    <button id="class-3-btn"onclick ="check(this)">Compounding</button>
+    <button id="class-3-btn"onclick ="check(this)">Crafting</button>
+    <button id="class-3-btn"onclick ="check(this)">Compiling</button>
+    </div>
+    </div>
+
     <script>
+        //CLASS 1 JS
         let counter = 0;
 
         function increment() {
@@ -74,6 +118,24 @@
         }
 
         btn.onclick = increment;
+
+        //CLASS 2 JS
+        function check(button) {
+        if (button.classList.contains("correct"))
+     {
+        button.style.backgroundColor = "lightgreen";
+     } else {
+        button.style.backgroundColor = "red";
+     }
+
+     let question = button.closest(".question");
+     let buttons = question.querySelectorAll("button");
+
+     for (let button of buttons)
+     {
+        button.disabled = true;
+     }
+    }
     </script>
 
 </body>
