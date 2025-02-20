@@ -252,11 +252,19 @@ class FlagGame {
     }
 
     if (this.gameType === 'timed') {
-        const timeLimit = parseInt(document.getElementById('time-limit').value);
-        if (isNaN(timeLimit) || timeLimit < 1 || timeLimit > 30) {
-            showError('Please enter a valid time limit (1-30 minutes)');
-            return;
-        }
+        this.timeLimit = parseInt(document.getElementById('time-limit').value) * 60;
+        const timerDisplay = document.getElementById('timer');
+        timerDisplay.classList.remove('hidden');
+        // Initialize currentRound for timed mode
+        this.currentRound = 0;
+        document.getElementById('round-counter').classList.remove('hidden');
+        document.getElementById('round-counter').querySelector('span').textContent = '0/∞';
+        // Set initial display before starting the countdown
+        const minutes = Math.floor(this.timeLimit / 60);
+        const seconds = this.timeLimit % 60;
+        timerDisplay.querySelector('span').textContent = 
+            `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        this.startTimer();
     }
 
         document.querySelector('.menu-icon').classList.add('active');
@@ -282,17 +290,8 @@ class FlagGame {
         }
         
         // Get time limit if timed mode is selected
-        if (this.gameType === 'timed') {
-            this.timeLimit = parseInt(document.getElementById('time-limit').value) * 60;
-            const timerDisplay = document.getElementById('timer');
-            timerDisplay.classList.remove('hidden');
-            // Set initial display before starting the countdown
-            const minutes = Math.floor(this.timeLimit / 60);
-            const seconds = this.timeLimit % 60;
-            timerDisplay.querySelector('span').textContent = 
-                `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            this.startTimer();
-        }
+       // In the startGame method, add this after the timeLimit setup:
+
     
         document.getElementById('score').querySelector('span').textContent = '0';
         document.getElementById('game-setup').classList.add('hidden');
@@ -377,11 +376,11 @@ class FlagGame {
             this.currentRound++;
             document.getElementById('round-counter').querySelector('span').textContent = 
                 `${this.currentRound}/${this.rounds}`;
-        } else if (this.gameType === 'infinite') {
+        } else if (this.gameType === 'infinite' || this.gameType === 'timed') {
             this.currentRound++;
             document.getElementById('round-counter').querySelector('span').textContent = 
                 `${this.currentRound}/∞`;
-        }
+        }        
     }
 
     checkAnswer(answer) {
